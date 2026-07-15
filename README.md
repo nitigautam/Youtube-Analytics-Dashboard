@@ -1,2 +1,2 @@
 # Youtube-Analytics-Platform
-End-to-end YouTube analytics platform using Snowflake, dbt, Streamlit in Snowflake, Cortex, and GitHub Actions.
+End-to-end YouTube analytics platform using Snowflake, dbt, Streamlit in Snowflake, Cortex.
