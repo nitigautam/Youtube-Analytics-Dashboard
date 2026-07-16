@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: youtube_raw
+    description: Raw YouTube Analytics data loaded from Kaggle.
+    database: RAW_DB
+    schema: YOUTUBE
+
+    tables:
+      - name: RAW_YOUTUBE_VIDEOS
+        description: Raw YouTube video analytics dataset.

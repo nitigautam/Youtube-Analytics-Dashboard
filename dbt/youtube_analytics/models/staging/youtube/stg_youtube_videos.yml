@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: stg_youtube_videos
+    description: Cleaned staging model for YouTube Analytics.
+
+    columns:
+
+      - name: video_id
+        description: Unique identifier of a video.
+        tests:
+          - unique
+          - not_null
+
+      - name: upload_timestamp
+        tests:
+          - not_null
+
+      - name: impressions
+        tests:
+          - not_null
+
+      - name: click_through_rate
+
+      - name: subscribers_gained
+
+      - name: traffic_source
+
+      - name: content_category
