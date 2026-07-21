@@ -9,5 +9,5 @@ youtube_analytics:
       role: ACCOUNTADMIN
       database: RAW_DB
       warehouse: COMPUTE_WH
-      schema: PUBLIC
+      schema: YOUTUBE
       threads: 4
