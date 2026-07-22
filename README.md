@@ -171,17 +171,6 @@ Users can ask questions such as:
 - Modern Data Engineering Workflow
 - Version Control using Git and GitHub
 
-## Screenshots
-
-Add screenshots of:
-
-- Dashboard Home
-- Executive Summary
-- KPI Dashboard
-- Video Performance Dashboard
-- Audience Dashboard
-- Cortex Analyst
-- dbt Lineage Graph
 
 ## Future Improvements
 
