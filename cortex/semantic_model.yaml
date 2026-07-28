@@ -1,0 +1,188 @@
+name: SV_YOUTUBE_EXECUTIVE_OVERVIEW
+tables:
+  - name: MART_EXECUTIVE_OVERVIEW
+    description: The table contains aggregated performance metrics for YouTube video content, summarized by upload year and month. Each record captures audience engagement and reach, including impression volumes, viewer interactions, watch time, and subscriber growth alongside averaged rates for click-through, view duration, and engagement.
+    base_table:
+      database: RAW_DB
+      schema: YOUTUBE
+      table: MART_EXECUTIVE_OVERVIEW
+    dimensions:
+      - name: TOTAL_COMMENTS
+        description: The total number of comments across YouTube content.
+        expr: TOTAL_COMMENTS
+        data_type: NUMBER(38,0)
+        sample_values:
+          - '10401822'
+          - '10067438'
+          - '4076696'
+      - name: TOTAL_IMPRESSIONS
+        description: The total number of impressions recorded across YouTube content.
+        expr: TOTAL_IMPRESSIONS
+        data_type: NUMBER(38,0)
+        sample_values:
+          - '1046879985'
+          - '2607216712'
+          - '2496594334'
+      - name: TOTAL_LIKES
+        description: The total number of likes received across YouTube content.
+        expr: TOTAL_LIKES
+        data_type: NUMBER(38,0)
+        sample_values:
+          - '132564204'
+          - '52165313'
+          - '121714539'
+      - name: TOTAL_SHARES
+        description: The total number of shares across YouTube content.
+        expr: TOTAL_SHARES
+        data_type: NUMBER(38,0)
+        sample_values:
+          - '3499859'
+          - '1502315'
+          - '3676522'
+      - name: TOTAL_SUBSCRIBERS_GAINED
+        description: The total number of subscribers gained.
+        expr: TOTAL_SUBSCRIBERS_GAINED
+        data_type: NUMBER(38,0)
+        sample_values:
+          - '372808'
+          - '925201'
+          - '864716'
+      - name: TOTAL_VIDEOS
+        description: The total number of videos associated with a given record.
+        expr: TOTAL_VIDEOS
+        data_type: NUMBER(18,0)
+        sample_values:
+          - '1017'
+          - '1605'
+          - '2602'
+      - name: UPLOAD_MONTH
+        description: The month in which a video was uploaded to YouTube.
+        expr: UPLOAD_MONTH
+        data_type: NUMBER(2,0)
+        sample_values:
+          - '11'
+          - '12'
+          - '9'
+      - name: UPLOAD_YEAR
+        description: The year in which a YouTube video was uploaded.
+        expr: UPLOAD_YEAR
+        data_type: NUMBER(4,0)
+        sample_values:
+          - '2025'
+          - '2024'
+    facts:
+      - name: AVG_CTR
+        description: The average click-through rate across YouTube content.
+        expr: AVG_CTR
+        data_type: NUMBER(38,2)
+        access_modifier: public_access
+        sample_values:
+          - '15.01'
+          - '15.16'
+          - '14.95'
+      - name: AVG_ENGAGEMENT_RATE
+        description: The average engagement rate for YouTube content, expressed as a percentage.
+        expr: AVG_ENGAGEMENT_RATE
+        data_type: NUMBER(38,2)
+        access_modifier: public_access
+        sample_values:
+          - '35.11'
+          - '28.56'
+          - '19.17'
+      - name: AVG_SUBSCRIBER_CONVERSION_RATE
+        description: The average rate at which viewers convert to subscribers.
+        expr: AVG_SUBSCRIBER_CONVERSION_RATE
+        data_type: NUMBER(38,2)
+        access_modifier: public_access
+        sample_values:
+          - '0.14'
+          - '0.42'
+          - '0.19'
+      - name: AVG_VIEW_DURATION_SECONDS
+        description: The average duration of YouTube video views measured in seconds.
+        expr: AVG_VIEW_DURATION_SECONDS
+        data_type: NUMBER(38,2)
+        access_modifier: public_access
+        sample_values:
+          - '914.25'
+          - '884.74'
+          - '939.58'
+      - name: AVG_VIEW_PERCENTAGE
+        description: The average percentage of a video that viewers watched.
+        expr: AVG_VIEW_PERCENTAGE
+        data_type: NUMBER(38,2)
+        access_modifier: public_access
+        sample_values:
+          - '49.41'
+          - '49.14'
+          - '49.71'
+      - name: TOTAL_WATCH_TIME_HOURS
+        description: The total number of hours watched across YouTube content.
+        expr: TOTAL_WATCH_TIME_HOURS
+        data_type: NUMBER(38,2)
+        access_modifier: public_access
+        sample_values:
+          - '252043272.07'
+          - '661410179.79'
+          - '645146130.27'
+verified_queries:
+  - name: '"0;1"'
+    sql: SELECT UPLOAD_YEAR, UPLOAD_MONTH, AVG_ENGAGEMENT_RATE, TOTAL_IMPRESSIONS FROM mart_executive_overview ORDER BY AVG_ENGAGEMENT_RATE DESC LIMIT 1
+    question: Which month had the highest engagement rate?
+    verified_at: 1784285182
+    verified_by: Semantic Model Generator
+    use_as_onboarding_question: false
+  - name: '"1;1"'
+    sql: SELECT UPLOAD_YEAR, SUM(TOTAL_IMPRESSIONS) AS TOTAL_IMPRESSIONS FROM mart_executive_overview GROUP BY UPLOAD_YEAR ORDER BY TOTAL_IMPRESSIONS DESC LIMIT 1
+    question: Which year generated the highest total impressions?
+    verified_at: 1784285182
+    verified_by: Semantic Model Generator
+    use_as_onboarding_question: false
+  - name: '"2;1"'
+    sql: SELECT UPLOAD_YEAR, UPLOAD_MONTH, TOTAL_SUBSCRIBERS_GAINED FROM mart_executive_overview ORDER BY TOTAL_SUBSCRIBERS_GAINED DESC LIMIT 1
+    question: Which month gained the highest number of subscribers?
+    verified_at: 1784285182
+    verified_by: Semantic Model Generator
+    use_as_onboarding_question: false
+  - name: '"3;1"'
+    sql: SELECT UPLOAD_YEAR, SUM(TOTAL_IMPRESSIONS) AS TOTAL_IMPRESSIONS, AVG(AVG_ENGAGEMENT_RATE) AS AVG_ENGAGEMENT_RATE FROM mart_executive_overview WHERE UPLOAD_YEAR IN (2024, 2025) GROUP BY UPLOAD_YEAR ORDER BY UPLOAD_YEAR
+    question: How do total impressions and engagement rates compare between 2024 and 2025?
+    verified_at: 1784285182
+    verified_by: Semantic Model Generator
+    use_as_onboarding_question: false
+  - name: '"4;1"'
+    sql: SELECT UPLOAD_YEAR, SUM(TOTAL_VIDEOS) AS TOTAL_VIDEOS, SUM(TOTAL_IMPRESSIONS) AS TOTAL_IMPRESSIONS, SUM(TOTAL_WATCH_TIME_HOURS) AS TOTAL_WATCH_TIME_HOURS, SUM(TOTAL_SUBSCRIBERS_GAINED) AS TOTAL_SUBSCRIBERS_GAINED, AVG(AVG_ENGAGEMENT_RATE) AS AVG_ENGAGEMENT_RATE FROM mart_executive_overview GROUP BY UPLOAD_YEAR ORDER BY UPLOAD_YEAR
+    question: How has our YouTube channel performance changed over the years?
+    verified_at: 1784285182
+    verified_by: Semantic Model Generator
+    use_as_onboarding_question: false
+  - name: '"5;1"'
+    sql: SELECT AVG(AVG_CTR) AS AVG_CTR_OVERALL, AVG(AVG_VIEW_PERCENTAGE) AS AVG_VIEW_PERCENTAGE_OVERALL, AVG(AVG_ENGAGEMENT_RATE) AS AVG_ENGAGEMENT_RATE_OVERALL, AVG(AVG_SUBSCRIBER_CONVERSION_RATE) AS AVG_SUBSCRIBER_CONVERSION_OVERALL FROM mart_executive_overview
+    question: What are the overall average performance metrics for our YouTube channel?
+    verified_at: 1784285182
+    verified_by: Semantic Model Generator
+    use_as_onboarding_question: false
+  - name: '"6;1"'
+    sql: SELECT SUM(TOTAL_WATCH_TIME_HOURS) AS TOTAL_WATCH_TIME_HOURS FROM mart_executive_overview WHERE UPLOAD_YEAR = 2025
+    question: What is the total watch time in hours for 2025?
+    verified_at: 1784285182
+    verified_by: Semantic Model Generator
+    use_as_onboarding_question: false
+  - name: '"7;1"'
+    sql: SELECT UPLOAD_YEAR, UPLOAD_MONTH, TOTAL_VIDEOS FROM mart_executive_overview ORDER BY UPLOAD_YEAR, UPLOAD_MONTH
+    question: How many videos were uploaded each month?
+    verified_at: 1784285182
+    verified_by: Semantic Model Generator
+    use_as_onboarding_question: false
+  - name: '"8;1"'
+    sql: SELECT UPLOAD_YEAR, AVG(AVG_CTR) AS AVG_CTR FROM mart_executive_overview GROUP BY UPLOAD_YEAR ORDER BY UPLOAD_YEAR
+    question: What is the average click-through rate by year?
+    verified_at: 1784285182
+    verified_by: Semantic Model Generator
+    use_as_onboarding_question: false
+  - name: '"9;1"'
+    sql: SELECT UPLOAD_YEAR, UPLOAD_MONTH, TOTAL_SUBSCRIBERS_GAINED FROM mart_executive_overview ORDER BY UPLOAD_YEAR, UPLOAD_MONTH
+    question: How many subscribers were gained each month over time?
+    verified_at: 1784285182
+    verified_by: Semantic Model Generator
+    use_as_onboarding_question: false
