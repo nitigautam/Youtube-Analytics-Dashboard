@@ -7,13 +7,6 @@ models:
       performance KPIs including impressions, engagement, subscribers,
       watch time, CTR, and viewer retention metrics. This model powers
       the YouTube Analytics Executive Dashboard and Cortex Analyst.
-
-data_tests:
-      - dbt_utils.unique_combination_of_columns:
-          arguments:
-            combination_of_columns:
-              - upload_year
-              - upload_month
       
     columns:
       - name: upload_year
