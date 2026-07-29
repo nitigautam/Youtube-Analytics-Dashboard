@@ -60,7 +60,7 @@ Snowflake Cortex Analyst AI
 - Snowflake Native Streamlit
 - Snowflake Cortex Analyst
 - YAML Semantic Model
-- Git & GitHub
+- GitHub
 
 
 ## Features
