@@ -73,4 +73,4 @@ SELECT
         4
     ) AS watch_time_per_impression
 
-FROM {{ ref('stg_youtube_videos') }}
+FROM {{ ref('stg_youtube_videos_combined') }}

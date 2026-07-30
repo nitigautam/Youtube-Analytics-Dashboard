@@ -9,3 +9,5 @@ sources:
     tables:
       - name: RAW_YOUTUBE_VIDEOS
         description: Raw YouTube video analytics dataset.
+      - name: RAW_YOUTUBE_VIDEOS_2023
+      
